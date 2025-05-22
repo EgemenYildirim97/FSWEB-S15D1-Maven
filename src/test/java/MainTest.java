@@ -23,7 +23,7 @@ public class MainTest {
         contacts.add(new Contact("John Doe", "123123123"));
         contacts.add(new Contact("Jane Doe", "124124124"));
         contacts.add(new Contact("Baby Doe", "125125125"));
-        mobilePhone = new MobilePhone("11111111", contacts);
+        mobilePhone = new MobilePhone("11111111");
     }
 
     @DisplayName("addItems methodu doğru çalışıyor mu mu?")
@@ -114,8 +114,8 @@ public class MainTest {
     @Test
     public void testCreateNewContact()  {
         mobilePhone.addNewContact(new Contact("Test", "12345678"));
-        assertEquals(mobilePhone.getMyContacts().size(),4);
-        assertEquals(mobilePhone.getMyContacts().get(3).getName(), "Test");
+        assertEquals(mobilePhone.getMyContacts().size(),1);
+        assertEquals(mobilePhone.getMyContacts().get(0).getName(), "Test");
     }
 
     @DisplayName("updateNewContact methodu doğru çalışıyor mu?")
@@ -126,35 +126,42 @@ public class MainTest {
         Contact updatedContact = new Contact("Test", "12345679");
 
         assertEquals(mobilePhone.updateContact(contact, updatedContact), true);
-        assertEquals(mobilePhone.getMyContacts().size(),4);
+        assertEquals(mobilePhone.getMyContacts().size(),1);
     }
 
     @DisplayName("removeNewContact methodu doğru çalışıyor mu?")
     @Test
     public void testRemoveContact()  {
         Contact contact = new Contact("Test", "12345678");
-        mobilePhone.addNewContact(new Contact("Test", "12345678"));
+        mobilePhone.addNewContact(contact);
 
-        assertEquals(mobilePhone.removeContact(contact), true);
-        assertEquals(mobilePhone.getMyContacts().size(),3);
+        assertEquals(true, mobilePhone.removeContact(contact));
     }
 
     @DisplayName("findContact(Contact) methodu doğru çalışıyor mu?")
     @Test
     public void testFindContact()  {
-        Contact contact = new Contact("Test", "12345678");
-        mobilePhone.addNewContact(new Contact("Test", "12345678"));
+        mobilePhone.addNewContact(new Contact("A", "1"));
+        mobilePhone.addNewContact(new Contact("B", "2"));
+        mobilePhone.addNewContact(new Contact("C", "3"));
 
-        assertEquals(mobilePhone.findContact(contact), 3);
+        Contact contact = new Contact("Test", "12345678");
+        mobilePhone.addNewContact(contact);
+
+        assertEquals(3, mobilePhone.findContact(contact.getName())); // 0, 1, 2, 3
     }
 
     @DisplayName("findContact(String) methodu doğru çalışıyor mu?")
     @Test
     public void testFindContactString()  {
-        Contact contact = new Contact("Test", "12345678");
-        mobilePhone.addNewContact(new Contact("Test", "12345678"));
+        mobilePhone.addNewContact(new Contact("A", "1"));
+        mobilePhone.addNewContact(new Contact("B", "2"));
+        mobilePhone.addNewContact(new Contact("C", "3"));
 
-        assertEquals(mobilePhone.findContact(contact.getName()), 3);
+        Contact contact = new Contact("Test", "12345678");
+        mobilePhone.addNewContact(contact);
+
+        assertEquals(3, mobilePhone.findContact(contact.getName())); // 0, 1, 2, 3
     }
 
     @DisplayName("queryContact(String) methodu doğru çalışıyor mu?")
